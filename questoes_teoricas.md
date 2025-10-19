@@ -1,4 +1,5 @@
 # 🧠 Check Point 5 - Disruptive Architectures IoT
+
 ## 📚 Teoria - Conceitos Fundamentais
 
 <div align="center">
@@ -27,6 +28,7 @@
 ## 🧩 Questão 1A - Estado Flutuante
 
 ### ❓ **Pergunta:**
+
 Quando utilizamos acionadores (ex: botões) em entradas digitais de dispositivos IoT, podemos sofrer de um problema de **estado flutuante**.  
 Como resolvemos esse problema em montagens convencionais? E como podemos facilitar isso no Arduino?
 
@@ -35,18 +37,21 @@ Como resolvemos esse problema em montagens convencionais? E como podemos facilit
 O **estado flutuante** é um problema crítico em eletrônica digital que ocorre quando um pino de entrada não está conectado a nenhum nível lógico definido (VCC ou GND), causando leituras instáveis e imprevisíveis.
 
 #### 🔍 **O que acontece:**
+
 - O pino fica "flutuando" entre 0V e 5V
 - O Arduino fica "confuso" sobre se o sinal é **0** ou **1**
 - Leituras aleatórias e instáveis
 - Comportamento errático do sistema
 
 #### 🛠️ **Soluções Convencionais:**
+
 - **Resistores Pull-Up:** Conectam o pino ao VCC (5V)
 - **Resistores Pull-Down:** Conectam o pino ao GND (0V)
 - **Buffer Schmitt:** Circuito que "limpa" o sinal digital
 - **Valores típicos:** 10kΩ para Pull-Up/Pull-Down
 
 #### 🚀 **Facilitação no Arduino:**
+
 O Arduino possui **resistores Pull-Up internos** (~20kΩ) que podem ser ativados facilmente:
 
 ```cpp
@@ -54,6 +59,7 @@ pinMode(pino, INPUT_PULLUP);  // Ativa Pull-Up interno
 ```
 
 **Vantagens:**
+
 - ✅ Elimina necessidade de componentes externos
 - ✅ Reduz complexidade do circuito
 - ✅ Economiza espaço na protoboard
@@ -64,11 +70,13 @@ pinMode(pino, INPUT_PULLUP);  // Ativa Pull-Up interno
 ## ⚙️ Questão 1B - Resistor Pull-Up
 
 ### ❓ **Pergunta:**
+
 Descreva o que é uma entrada conectada a um resistor Pull-Up. Como funciona e qual o estado "não acionado" da chave?
 
 ### ✅ **Resposta:**
 
 #### 🔌 **Definição:**
+
 Um **resistor Pull-Up** conecta o pino de entrada digital ao **VCC (5V)** através de um resistor, garantindo um nível lógico definido quando a chave não está acionada.
 
 #### ⚡ **Funcionamento:**
@@ -79,12 +87,14 @@ Um **resistor Pull-Up** conecta o pino de entrada digital ao **VCC (5V)** atrav�
 | **Pressionado** | Pino → GND (via chave) | **LOW (0)** | ~0V |
 
 #### 🔍 **Detalhes Técnicos:**
+
 - **Valor do resistor:** 10kΩ (típico)
 - **Corrente limitada:** O resistor protege contra curto-circuito
 - **Estado padrão:** **HIGH** quando não acionado
 - **Lógica invertida:** Pressionar = LOW, Soltar = HIGH
 
 #### 📊 **Diagrama Conceitual:**
+
 ```
 VCC (5V) ----[10kΩ]---- Pino Digital
                            |
@@ -94,6 +104,7 @@ VCC (5V) ----[10kΩ]---- Pino Digital
 ```
 
 #### 💡 **Estado "Não Acionado":**
+
 - A entrada fica em nível **ALTO (HIGH)**
 - Corrente flui do VCC através do resistor para o pino
 - Tensão no pino ≈ 5V
@@ -104,11 +115,13 @@ VCC (5V) ----[10kΩ]---- Pino Digital
 ## ⚡ Questão 1C - Resistor Pull-Down
 
 ### ❓ **Pergunta:**
+
 E um Pull-Down? Como funciona e qual o estado "não acionado" da chave?
 
 ### ✅ **Resposta:**
 
 #### 🔌 **Definição:**
+
 Um **resistor Pull-Down** conecta o pino de entrada digital ao **GND (0V)** através de um resistor, garantindo um nível lógico definido quando a chave não está acionada.
 
 #### ⚡ **Funcionamento:**
@@ -119,12 +132,14 @@ Um **resistor Pull-Down** conecta o pino de entrada digital ao **GND (0V)** atra
 | **Pressionado** | Pino → VCC (via chave) | **HIGH (1)** | ~5V |
 
 #### 🔍 **Detalhes Técnicos:**
+
 - **Valor do resistor:** 10kΩ (típico)
 - **Corrente limitada:** O resistor protege contra curto-circuito
 - **Estado padrão:** **LOW** quando não acionado
 - **Lógica direta:** Pressionar = HIGH, Soltar = LOW
 
 #### 📊 **Diagrama Conceitual:**
+
 ```
 VCC (5V) ----[Chave]---- Pino Digital
                            |
@@ -134,6 +149,7 @@ VCC (5V) ----[Chave]---- Pino Digital
 ```
 
 #### 💡 **Estado "Não Acionado":**
+
 - A entrada fica em nível **BAIXO (LOW)**
 - Corrente flui do pino através do resistor para o GND
 - Tensão no pino ≈ 0V
@@ -157,12 +173,14 @@ VCC (5V) ----[Chave]---- Pino Digital
 ### 🎯 **Quando Usar Cada Um:**
 
 #### **Pull-Up:**
+
 - ✅ Botões e switches
 - ✅ Sensores que ativam quando conectados ao GND
 - ✅ Quando você quer lógica invertida
 - ✅ Arduino (Pull-Up interno disponível)
 
 #### **Pull-Down:**
+
 - ✅ Sensores que ativam quando conectados ao VCC
 - ✅ Quando você quer lógica direta
 - ✅ Circuitos que precisam de estado LOW por padrão
@@ -172,6 +190,7 @@ VCC (5V) ----[Chave]---- Pino Digital
 ## 🔧 Aplicações Práticas
 
 ### 💻 **Código Arduino - Pull-Up Interno:**
+
 ```cpp
 const int BOTAO_PIN = 4;
 const int LED_PIN = 2;
@@ -195,6 +214,7 @@ void loop() {
 ```
 
 ### 🔌 **Código Arduino - Pull-Down Externo:**
+
 ```cpp
 const int SENSOR_PIN = 4;
 const int LED_PIN = 2;
